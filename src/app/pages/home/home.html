@@ -1,0 +1,14 @@
+<h1 class="fs-2 text-primary mb-3">Available Venues</h1>
+
+<em class="fs-6 text-secondary"
+  ><b>NOTE:</b> You can view the available venue layout by clicking on the
+  <b>Mark Space</b> button.</em
+>
+
+<ul class="row list list-unstyled mt-4">
+  @for (venue of availableVenues; track venue.id) {
+    <li class="col-md-6 col-lg-4 mb-4">
+      <app-venue-card [venue]="venue"></app-venue-card>
+    </li>
+  }
+</ul>

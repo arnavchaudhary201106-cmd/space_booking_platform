@@ -1,0 +1,539 @@
+{
+  "venueId": 2,
+  "name": "Sample Venue 2",
+  "length": 66,
+  "breadth": 90,
+  "layoutData": {
+    "cellWidth": 1,
+    "cellHeight": 1,
+    "nonClickableAreas": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 66,
+        "height": 1,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 71,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 0,
+        "y": 71,
+        "width": 66,
+        "height": 3,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": -1,
+        "y": 74,
+        "width": 21,
+        "height": 20,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 45,
+        "y": 74,
+        "width": 21,
+        "height": 20,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": -1,
+        "y": 89,
+        "width": 66,
+        "height": 2,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 19.5,
+        "y": 73.5,
+        "width": 0.5,
+        "height": 16,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 20,
+        "y": 73.5,
+        "width": 25,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 45,
+        "y": 73.5,
+        "width": 0.5,
+        "height": 16,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 20,
+        "y": 89,
+        "width": 25,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 0.5,
+        "y": 0.5,
+        "width": 66,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 0.5,
+        "y": 0.5,
+        "width": 0.5,
+        "height": 71,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 1,
+        "y": 71,
+        "width": 70,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 15.5,
+        "y": 88.5,
+        "width": 3,
+        "height": 1,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 46.5,
+        "y": 88.5,
+        "width": 3,
+        "height": 1,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "width": 6,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 10,
+        "y": 1,
+        "width": 2,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 28,
+        "y": 1,
+        "width": 1,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 34,
+        "y": 1,
+        "width": 6,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 52,
+        "y": 1,
+        "width": 1,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 57,
+        "y": 1,
+        "width": 2,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 5,
+        "y": 68,
+        "width": 2,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 19,
+        "y": 68,
+        "width": 27,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 57,
+        "y": 68,
+        "width": 2,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 32,
+        "y": 35.5,
+        "width": 1,
+        "height": 4.5,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 31.95,
+        "y": 16.65,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 31.95,
+        "y": 35.15,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 31.85,
+        "y": 53.65,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 22,
+        "y": 1,
+        "width": 1,
+        "height": 70,
+        "fillColor": "purple",
+        "strokeColor": "purple"
+      },
+      {
+        "x": 48.5,
+        "y": 1,
+        "width": 1,
+        "height": 70,
+        "fillColor": "purple",
+        "strokeColor": "purple"
+      },
+      {
+        "x": 1,
+        "y": 16,
+        "width": 1,
+        "height": 2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 1,
+        "y": 53,
+        "width": 1,
+        "height": 2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 65,
+        "y": 16.5,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 65,
+        "y": 53.5,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 64,
+        "y": 16.5,
+        "width": 1,
+        "height": 1,
+        "fillColor": "blue",
+        "strokeColor": "blue",
+        "title": "Electrical Panel"
+      },
+      {
+        "x": 65,
+        "y": 34.5,
+        "width": 1,
+        "height": 1,
+        "fillColor": "blue",
+        "strokeColor": "blue",
+        "title": "Electrical Panel"
+      },
+      {
+        "x": 64,
+        "y": 53.5,
+        "width": 1,
+        "height": 1,
+        "fillColor": "blue",
+        "strokeColor": "blue",
+        "title": "Electrical Panel"
+      },
+      {
+        "x": 65,
+        "y": 35,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 65.5,
+        "y": 0.5,
+        "width": 0.5,
+        "height": 71,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      }
+    ]
+  },
+  "legends": [
+    {
+      "label": "Fire curtains (No construction zone below)",
+      "colorCode": "purple"
+    },
+    {
+      "label": "Compulsory passage for entry/exit/services",
+      "colorCode": "red"
+    },
+    {
+      "label": "Electrical panel",
+      "colorCode": "blue"
+    },
+    {
+      "label": "Columns",
+      "colorCode": "gray"
+    }
+  ],
+  "helperTexts": [
+    {
+      "image": [
+        {
+          "url": "images/emergency-exit.svg",
+          "label": "Emergency Exit"
+        },
+        {
+          "url": "images/cargo-truck.svg",
+          "label": "Cargo/Service Entry"
+        }
+      ],
+      "positionX": -200,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/stairs.svg",
+          "label": "Stairs/Elevators"
+        }
+      ],
+      "positionX": 250,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/toilet-male.svg",
+          "label": "Toilet (Male)"
+        },
+        {
+          "url": "images/toilet-female.svg",
+          "label": "Toilet (Female)"
+        },
+        {
+          "url": "images/emergency-exit.svg",
+          "label": "Emergency Exit"
+        },
+        {
+          "url": "images/cargo-truck.svg",
+          "label": "Cargo/Service Entry"
+        }
+      ],
+      "positionX": 450,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/toilet-male.svg",
+          "label": "Toilet (Male)"
+        },
+        {
+          "url": "images/toilet-female.svg",
+          "label": "Toilet (Female)"
+        },
+        {
+          "url": "images/emergency-exit.svg",
+          "label": "Emergency Exit"
+        },
+        {
+          "url": "images/stairs.svg",
+          "label": "Stairs/Elevators"
+        }
+      ],
+      "positionX": 1130,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/drinking-water.svg",
+          "label": "Drinking Water"
+        },
+        {
+          "url": "images/stairs.svg",
+          "label": "Stairs/Elevators"
+        },
+        {
+          "url": "images/toilet-male.svg",
+          "label": "Toilet (Male)"
+        },
+        {
+          "url": "images/toilet-female.svg",
+          "label": "Toilet (Female)"
+        }
+      ],
+      "positionX": -250,
+      "positionY": 1465
+    },
+    {
+      "image": [
+        {
+          "url": "images/toilet-male.svg",
+          "label": "Toilet (Male)"
+        },
+        {
+          "url": "images/toilet-female.svg",
+          "label": "Toilet (Female)"
+        },
+        {
+          "url": "images/drinking-water.svg",
+          "label": "Drinking Water"
+        },
+        {
+          "url": "images/stairs.svg",
+          "label": "Stairs/Elevators"
+        }
+      ],
+      "positionX": 960,
+      "positionY": 1465
+    },
+    {
+      "image": [
+        {
+          "url": "images/circulation.svg",
+          "label": "Circulation Area"
+        }
+      ],
+      "positionX": 1200,
+      "positionY": 1720
+    },
+    {
+      "image": [
+        {
+          "url": "images/circulation.svg",
+          "label": "Circulation Area"
+        }
+      ],
+      "positionX": 30,
+      "positionY": 1720
+    }
+  ],
+  "exitLabels": [
+    {
+      "text": "Exit 1",
+      "positionX": 46,
+      "positionY": -15
+    },
+    {
+      "text": "Exit 2",
+      "positionX": 550,
+      "positionY": -15
+    },
+    {
+      "text": "Exit 3",
+      "positionX": 720,
+      "positionY": -15
+    },
+    {
+      "text": "Exit 4",
+      "positionX": 1030,
+      "positionY": -15
+    },
+    {
+      "text": "Exit 5",
+      "positionX": 1140,
+      "positionY": -15
+    },
+    {
+      "text": "Exit 6",
+      "positionX": 100,
+      "positionY": 1435
+    },
+    {
+      "text": "Exit 7",
+      "positionX": 1140,
+      "positionY": 1435
+    },
+    {
+      "text": "Exit 8",
+      "positionX": 620,
+      "positionY": 1440
+    },
+    {
+      "text": "Exit 9",
+      "positionX": 320,
+      "positionY": 1795
+    },
+    {
+      "text": "Exit 10",
+      "positionX": 940,
+      "positionY": 1795
+    }
+  ]
+}

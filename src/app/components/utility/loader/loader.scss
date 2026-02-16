@@ -1,0 +1,6 @@
+.loader-overlay {
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(0.15rem);
+}

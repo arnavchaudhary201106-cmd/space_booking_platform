@@ -1,0 +1,15 @@
+<div class="venue-card border rounded shadow-sm p-3">
+  <h3 class="fs-4 mb-3">
+    {{ venue.name }}
+  </h3>
+
+  <p class="text-secondary mb-3">
+    {{ venue.description }}
+  </p>
+
+  <div class="text-end">
+    <a class="btn btn-primary" routerLink="/mark-space" [queryParams]="{ venueId: venue.id }"
+      >Mark Space</a
+    >
+  </div>
+</div>

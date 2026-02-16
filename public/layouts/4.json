@@ -1,0 +1,264 @@
+{
+  "venueId": 4,
+  "name": "Sample Venue 4",
+  "length": 156,
+  "breadth": 43,
+  "layoutData": {
+    "cellWidth": 1,
+    "cellHeight": 1,
+    "nonClickableAreas": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 43,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "width": 140,
+        "height": 1,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 0,
+        "y": 42,
+        "width": 140,
+        "height": 1,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 139,
+        "y": 1,
+        "width": 1,
+        "height": 41,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 0.5,
+        "y": 0.5,
+        "width": 0.5,
+        "height": 42,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 0.5,
+        "y": 0.5,
+        "width": 139,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 0.5,
+        "y": 42,
+        "width": 139,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 139,
+        "y": 1,
+        "width": 0.5,
+        "height": 41,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 142.5,
+        "y": 42,
+        "width": 13,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 142.5,
+        "y": 36,
+        "width": 0.5,
+        "height": 6,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 155,
+        "y": 28,
+        "width": 0.5,
+        "height": 14,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 150,
+        "y": 27.5,
+        "width": 5.5,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 149.5,
+        "y": 27.5,
+        "width": 0.5,
+        "height": 2.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 148.5,
+        "y": 29.5,
+        "width": 1,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 148.5,
+        "y": 29.5,
+        "width": 0.5,
+        "height": 1.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 147.5,
+        "y": 30.5,
+        "width": 1,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 147.5,
+        "y": 31,
+        "width": 0.5,
+        "height": 1,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 146.5,
+        "y": 31.5,
+        "width": 1.5,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 146.5,
+        "y": 32,
+        "width": 0.5,
+        "height": 1,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 145.5,
+        "y": 32.5,
+        "width": 1,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 145.5,
+        "y": 32.5,
+        "width": 0.5,
+        "height": 1.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 144.5,
+        "y": 33.5,
+        "width": 1,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 144.5,
+        "y": 33.5,
+        "width": 0.5,
+        "height": 1.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 143.5,
+        "y": 34.5,
+        "width": 1,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 143.5,
+        "y": 34.5,
+        "width": 0.5,
+        "height": 1.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 142.5,
+        "y": 35.5,
+        "width": 1,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      }
+    ]
+  },
+  "legends": [],
+  "helperTexts": [
+    {
+      "image": [
+        {
+          "url": "images/emergency-exit-right.svg",
+          "label": "Emergency Exit"
+        }
+      ],
+      "positionX": 950,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/emergency-exit-right.svg",
+          "label": "Emergency Exit"
+        }
+      ],
+      "positionX": 1650,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/emergency-exit-right.svg",
+          "label": "Emergency Exit"
+        }
+      ],
+      "positionX": 2850,
+      "positionY": 10
+    },
+    {
+      "image": [
+        {
+          "url": "images/emergency-exit-right.svg",
+          "label": "Emergency Exit"
+        }
+      ],
+      "positionX": 2350,
+      "positionY": 900
+    }
+  ],
+  "exitLabels": []
+}

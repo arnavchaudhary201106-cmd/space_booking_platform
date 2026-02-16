@@ -1,0 +1,915 @@
+{
+  "venueId": 3,
+  "name": "Sample Venue 3",
+  "length": 86,
+  "breadth": 146,
+  "layoutData": {
+    "cellWidth": 1,
+    "cellHeight": 1,
+    "nonClickableAreas": [
+      {
+        "x": 1,
+        "y": 90,
+        "width": 5.5,
+        "height": 2,
+        "fillColor": "yellow",
+        "strokeColor": "yellow"
+      },
+      {
+        "x": 1,
+        "y": 92,
+        "width": 8.5,
+        "height": 35,
+        "fillColor": "yellow",
+        "strokeColor": "yellow"
+      },
+      {
+        "x": 0,
+        "y": 39,
+        "width": 6,
+        "height": 19,
+        "fillColor": "#ffffff",
+        "strokeColor": "gray"
+      },
+      {
+        "x": 0,
+        "y": 71,
+        "width": 6,
+        "height": 13,
+        "fillColor": "#ffffff",
+        "strokeColor": "gray"
+      },
+      {
+        "x": 0,
+        "y": 99,
+        "width": 7.8,
+        "height": 13,
+        "fillColor": "#ffffff",
+        "strokeColor": "gray"
+      },
+      {
+        "x": -0.5,
+        "y": -1,
+        "width": 1.5,
+        "height": 129,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 85,
+        "y": 0,
+        "width": 1.5,
+        "height": 129,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": -1,
+        "y": -0.5,
+        "width": 88,
+        "height": 1.5,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": -1,
+        "y": 127,
+        "width": 88,
+        "height": 3,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": -1,
+        "y": 130,
+        "width": 26,
+        "height": 20,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": -1,
+        "y": 130,
+        "width": 26,
+        "height": 20,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 67,
+        "y": 130,
+        "width": 20,
+        "height": 20,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 67,
+        "y": 130,
+        "width": 20,
+        "height": 20,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": -1,
+        "y": 145,
+        "width": 88,
+        "height": 2,
+        "fillColor": "#ffffff",
+        "strokeColor": "#ffffff"
+      },
+      {
+        "x": 24.5,
+        "y": 129.5,
+        "width": 0.5,
+        "height": 16,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 25,
+        "y": 129.5,
+        "width": 42,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 67,
+        "y": 129.5,
+        "width": 0.5,
+        "height": 16,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 25,
+        "y": 145,
+        "width": 42,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 21.5,
+        "y": 144.5,
+        "width": 2,
+        "height": 1,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 68.5,
+        "y": 144.5,
+        "width": 3,
+        "height": 1,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 0.5,
+        "y": 0.5,
+        "width": 85,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 0.5,
+        "y": 0.5,
+        "width": 0.5,
+        "height": 39,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 1,
+        "y": 39,
+        "width": 5,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 5.5,
+        "y": 39.5,
+        "width": 0.5,
+        "height": 18.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 0.5,
+        "y": 57.5,
+        "width": 5,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 0.5,
+        "y": 58,
+        "width": 0.5,
+        "height": 13.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 1,
+        "y": 71,
+        "width": 5,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 5.5,
+        "y": 71.5,
+        "width": 0.5,
+        "height": 12.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 0.5,
+        "y": 83.5,
+        "width": 5,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 0.5,
+        "y": 84,
+        "width": 0.5,
+        "height": 15.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 1,
+        "y": 99,
+        "width": 6.3,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 7.3,
+        "y": 99,
+        "width": 0.5,
+        "height": 13,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 1,
+        "y": 111.5,
+        "width": 6.3,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 0.5,
+        "y": 111.5,
+        "width": 0.5,
+        "height": 15.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 0.5,
+        "y": 127,
+        "width": 85,
+        "height": 0.5,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 85,
+        "y": 1,
+        "width": 0.5,
+        "height": 126,
+        "fillColor": "#742371",
+        "strokeColor": "#742371"
+      },
+      {
+        "x": 1,
+        "y": 23,
+        "width": 84,
+        "height": 1,
+        "fillColor": "purple",
+        "strokeColor": "purple"
+      },
+      {
+        "x": 6,
+        "y": 49.5,
+        "width": 79,
+        "height": 1,
+        "fillColor": "purple",
+        "strokeColor": "purple"
+      },
+      {
+        "x": 6,
+        "y": 76.5,
+        "width": 79,
+        "height": 1,
+        "fillColor": "purple",
+        "strokeColor": "purple"
+      },
+      {
+        "x": 8,
+        "y": 104,
+        "width": 77,
+        "height": 1,
+        "fillColor": "purple",
+        "strokeColor": "purple"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "width": 1,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 16,
+        "y": 1,
+        "width": 1,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 26,
+        "y": 1,
+        "width": 1,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 31,
+        "y": 1,
+        "width": 1,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 35,
+        "y": 1,
+        "width": 2,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 40,
+        "y": 1,
+        "width": 13,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 59,
+        "y": 1,
+        "width": 2,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 68,
+        "y": 1,
+        "width": 1,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 79,
+        "y": 1,
+        "width": 2,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 1,
+        "y": 9,
+        "width": 3,
+        "height": 1,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 6,
+        "y": 52,
+        "width": 3,
+        "height": 2,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 6,
+        "y": 74,
+        "width": 3,
+        "height": 2,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 82,
+        "y": 24,
+        "width": 3,
+        "height": 2,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 82,
+        "y": 37,
+        "width": 3,
+        "height": 2,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 82,
+        "y": 46,
+        "width": 3,
+        "height": 7,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 14,
+        "y": 124,
+        "width": 2,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 24,
+        "y": 124,
+        "width": 44,
+        "height": 3,
+        "fillColor": "#2E8B57",
+        "strokeColor": "#2E8B57"
+      },
+      {
+        "x": 79.5,
+        "y": 124,
+        "width": 2,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 45.5,
+        "y": 36.85,
+        "width": 1,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 45.5,
+        "y": 110.85,
+        "width": 1,
+        "height": 3,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 6,
+        "y": 102,
+        "width": 3,
+        "height": 2,
+        "fillColor": "red",
+        "strokeColor": "red"
+      },
+      {
+        "x": 3.93,
+        "y": 7.9,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 3.93,
+        "y": 17.15,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 3.93,
+        "y": 26.4,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 3.93,
+        "y": 35.65,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 3.93,
+        "y": 63.1,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 45.33,
+        "y": 17.15,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 45.33,
+        "y": 35.65,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 45.33,
+        "y": 53.95,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 45.33,
+        "y": 72.8,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 45.33,
+        "y": 91,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 45.33,
+        "y": 109.65,
+        "width": 1.2,
+        "height": 1.2,
+        "fillColor": "gray",
+        "strokeColor": "gray",
+        "title": "Pillar"
+      },
+      {
+        "x": 5.1,
+        "y": 35.2,
+        "width": 1,
+        "height": 1,
+        "fillColor": "blue",
+        "strokeColor": "blue",
+        "title": "Electrical Panel"
+      },
+      {
+        "x": 5.1,
+        "y": 36.2,
+        "width": 1,
+        "height": 1,
+        "fillColor": "blue",
+        "strokeColor": "blue",
+        "title": "Electrical Panel"
+      }
+    ]
+  },
+  "legends": [
+    {
+      "label": "Fire curtains (No construction zone below)",
+      "colorCode": "purple"
+    },
+    {
+      "label": "Compulsory passage for entry/exit/services",
+      "colorCode": "red"
+    },
+    {
+      "label": "Main entry/exit",
+      "colorCode": "#2E8B57"
+    },
+    {
+      "label": "Area not available for exhibitions",
+      "colorCode": "yellow"
+    },
+    {
+      "label": "Electrical panel",
+      "colorCode": "blue"
+    },
+    {
+      "label": "Columns",
+      "colorCode": "gray"
+    }
+  ],
+  "helperTexts": [
+    {
+      "image": [
+        {
+          "url": "images/toilet-female.svg",
+          "label": "Toilet (Female)"
+        }
+      ],
+      "positionX": 0,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/toilet-male.svg",
+          "label": "Toilet (Male)"
+        }
+      ],
+      "positionX": 265,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/drinking-water.svg",
+          "label": "Drinking Water"
+        }
+      ],
+      "positionX": 430,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/stairs.svg",
+          "label": "Stairs/Elevators"
+        },
+        {
+          "url": "images/emergency-exit.svg",
+          "label": "Emergency Exit"
+        }
+      ],
+      "positionX": 610,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/cargo-truck.svg",
+          "label": "Cargo/Service Entry"
+        }
+      ],
+      "positionX": 960,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/emergency-exit.svg",
+          "label": "Emergency Exit"
+        },
+        {
+          "url": "images/stairs.svg",
+          "label": "Stairs/Elevators"
+        }
+      ],
+      "positionX": 1200,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/toilet-male.svg",
+          "label": "Toilet (Male)"
+        }
+      ],
+      "positionX": 1550,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/toilet-female.svg",
+          "label": "Toilet (Female)"
+        }
+      ],
+      "positionX": 1700,
+      "positionY": -110
+    },
+    {
+      "image": [
+        {
+          "url": "images/toilet-male.svg",
+          "label": "Toilet (Male)"
+        },
+        {
+          "url": "images/toilet-female.svg",
+          "label": "Toilet (Female)"
+        },
+        {
+          "url": "images/stairs.svg",
+          "label": "Stairs/Elevators"
+        }
+      ],
+      "positionX": -300,
+      "positionY": 2565
+    },
+    {
+      "image": [
+        {
+          "url": "images/toilet-male.svg",
+          "label": "Toilet (Male)"
+        },
+        {
+          "url": "images/toilet-female.svg",
+          "label": "Toilet (Female)"
+        }
+      ],
+      "positionX": 180,
+      "positionY": 2590
+    },
+    {
+      "image": [
+        {
+          "url": "images/toilet-male.svg",
+          "label": "Toilet (Male)"
+        },
+        {
+          "url": "images/toilet-female.svg",
+          "label": "Toilet (Female)"
+        }
+      ],
+      "positionX": 1400,
+      "positionY": 2590
+    },
+    {
+      "image": [
+        {
+          "url": "images/stairs.svg",
+          "label": "Stairs/Elevators"
+        },
+        {
+          "url": "images/drinking-water.svg",
+          "label": "Drinking Water"
+        }
+      ],
+      "positionX": 1700,
+      "positionY": 2590
+    },
+    {
+      "image": [
+        {
+          "url": "images/emergency-exit.svg",
+          "label": "Emergency Exit"
+        }
+      ],
+      "positionX": -120,
+      "positionY": 1020
+    },
+    {
+      "image": [
+        {
+          "url": "images/emergency-exit.svg",
+          "label": "Emergency Exit"
+        }
+      ],
+      "positionX": -120,
+      "positionY": 1460
+    },
+    {
+      "image": [
+        {
+          "url": "images/emergency-exit.svg",
+          "label": "Emergency Exit"
+        }
+      ],
+      "positionX": -110,
+      "positionY": 2015
+    },
+    {
+      "image": [
+        {
+          "url": "images/emergency-exit.svg",
+          "label": "Emergency Exit"
+        }
+      ],
+      "positionX": 1720,
+      "positionY": 500
+    },
+    {
+      "image": [
+        {
+          "url": "images/circulation.svg",
+          "label": "Circulation Area"
+        }
+      ],
+      "positionX": 1610,
+      "positionY": 2830
+    }
+  ],
+  "exitLabels": [
+    {
+      "text": "Exit 1",
+      "positionX": 46,
+      "positionY": -15
+    },
+    {
+      "text": "Exit 2",
+      "positionX": 310,
+      "positionY": -15
+    },
+    {
+      "text": "Exit 3",
+      "positionX": 695,
+      "positionY": -15
+    },
+    {
+      "text": "Exit 4",
+      "positionX": 1175,
+      "positionY": -15
+    },
+    {
+      "text": "Exit 5",
+      "positionX": 1575,
+      "positionY": -15
+    },
+    {
+      "text": "Exit 6",
+      "positionX": 1720,
+      "positionY": 470
+    },
+    {
+      "text": "Exit 7",
+      "positionX": 1590,
+      "positionY": 2560
+    },
+    {
+      "text": "Exit 8",
+      "positionX": 280,
+      "positionY": 2560
+    },
+    {
+      "text": "Exit 9",
+      "positionX": 65,
+      "positionY": 2050
+    },
+    {
+      "text": "Exit 10",
+      "positionX": 50,
+      "positionY": 1490
+    },
+    {
+      "text": "Exit 11",
+      "positionX": 50,
+      "positionY": 1050
+    },
+    {
+      "text": "Exit 12",
+      "positionX": 900,
+      "positionY": 2565
+    },
+    {
+      "text": "Exit 13",
+      "positionX": 430,
+      "positionY": 2915
+    },
+    {
+      "text": "Exit 14",
+      "positionX": 1380,
+      "positionY": 2915
+    }
+  ]
+}

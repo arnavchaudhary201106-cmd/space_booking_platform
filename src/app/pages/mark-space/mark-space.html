@@ -1,0 +1,45 @@
+<div class="d-flex align-items-center gap-3 mb-4">
+  <app-back-button></app-back-button>
+  <h1 class="fs-4 text-primary mb-0">{{ venueLayout.name }}</h1>
+</div>
+
+<!-- Toolkit -->
+<ul class="list list-unstyled d-flex gap-3 flex-nowrap overflow-auto mb-3">
+  <li class="flex-shrink-0">
+    <button
+      [ngClass]="currentCursorMode === CursorMode.drag ? 'btn-primary' : 'btn-outline-primary'"
+      class="btn"
+      (click)="switchToDragMode()"
+    >
+      Drag
+    </button>
+  </li>
+  <li class="flex-shrink-0">
+    <button
+      [ngClass]="currentCursorMode === CursorMode.draw ? 'btn-primary' : 'btn-outline-primary'"
+      class="btn"
+      (click)="switchToDrawMode()"
+    >
+      Draw
+    </button>
+  </li>
+  <li class="flex-shrink-0">
+    <button class="btn btn-outline-secondary" (click)="zoomInLayout()">Zoom In</button>
+  </li>
+  <li class="flex-shrink-0">
+    <button class="btn btn-outline-secondary" (click)="zoomOutLayout()">Zoom Out</button>
+  </li>
+</ul>
+
+<!-- Venu layout -->
+<div class="venue-layout-container border rounded shadow-sm overflow-hidden" #venueLayoutContainer>
+  <div #panzoom>
+    <div
+      [ngStyle]="{
+        'pointer-events': currentCursorMode === CursorMode.drag ? 'none' : 'all',
+      }"
+    >
+      <app-venue-renderer [venueLayout]="venueLayout"></app-venue-renderer>
+    </div>
+  </div>
+</div>

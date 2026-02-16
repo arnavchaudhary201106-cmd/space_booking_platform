@@ -13,7 +13,10 @@ html {
         primary: mat.$azure-palette,
         tertiary: mat.$blue-palette,
       ),
-      typography: Inter,
+      typography: (
+        plain-family: '"Inter", sans-serif',
+        brand-family: '"Inter", sans-serif',
+      ),
       density: 0,
     )
   );
@@ -30,7 +33,7 @@ body {
   // variables at https://material.angular.dev/guide/system-variables
   background-color: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+  font: var(--mat-sys-body-medium) !important;
 
   // Reset the user agent margin.
   margin: 0;

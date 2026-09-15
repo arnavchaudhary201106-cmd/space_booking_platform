@@ -1,7 +1,9 @@
 import { DOCUMENT, Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { fabric } from 'fabric';
-import { COLORS, METERS_TO_PIXELS } from '../constants/venue-layout';
+import { COLORS, DASHED_BORDER_CONFIG, METERS_TO_PIXELS } from '../constants/venue-layout';
 import { ExitLabel, HelperText, NonClickableArea } from '../models/venue.model';
+import { StallRect } from '../models/stall-rect.model';
+import { BorderLine } from '../models/border-line.model';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +41,7 @@ export class LayoutRendererService {
       selectable: false,
       hasControls: false,
       hoverCursor: 'default',
+      evented: false,
     };
 
     for (let row = 0; row <= rows; row++) {
@@ -87,6 +90,92 @@ export class LayoutRendererService {
 
         canvas!.add(rect);
       });
+  }
+
+  createStallRect({
+    canvas,
+    cellKey,
+    groupId,
+    left,
+    top,
+    width,
+    height,
+    onMouseOver,
+    onMouseOut,
+  }: {
+    canvas: fabric.Canvas;
+    cellKey: string;
+    groupId: number;
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    onMouseOver: (event: fabric.IEvent<MouseEvent>) => void;
+    onMouseOut: (event: fabric.IEvent<MouseEvent>) => void;
+  }): StallRect {
+    const rect = new StallRect({
+      left,
+      top,
+      width,
+      height,
+      fill: COLORS.stallFill,
+      stroke: COLORS.gridLine,
+      strokeWidth: 1,
+      selectable: false,
+      hasControls: false,
+      hoverCursor: 'pointer',
+    });
+    rect.cellKey = cellKey;
+    rect.groupId = groupId;
+
+    rect.on('mouseover', onMouseOver);
+    rect.on('mouseout', onMouseOut);
+    canvas.add(rect);
+
+    return rect;
+  }
+
+  createBorderLine({
+    canvas,
+    coords,
+    color,
+    groupId,
+    onMouseOver,
+    onMouseOut,
+  }: {
+    canvas: fabric.Canvas;
+    coords: [number, number, number, number];
+    color: string;
+    groupId: number;
+    onMouseOver: (event: fabric.IEvent<MouseEvent>) => void;
+    onMouseOut: (event: fabric.IEvent<MouseEvent>) => void;
+  }): BorderLine {
+    const border = new BorderLine(coords, {
+      strokeWidth: 2,
+      stroke: color,
+      strokeDashArray: [],
+      selectable: false,
+      hasControls: false,
+      hoverCursor: 'pointer',
+    });
+    border.groupId = groupId;
+
+    border.on('mouseover', onMouseOver);
+    border.on('mouseout', onMouseOut);
+    canvas.add(border);
+
+    return border;
+  }
+
+  removeCanvasObject(canvas: fabric.Canvas, object: fabric.Object) {
+    canvas.remove(object);
+  }
+
+  setBorderState(canvas: fabric.Canvas, border: fabric.Line, isOpen: boolean) {
+    border.set({
+      strokeDashArray: isOpen ? DASHED_BORDER_CONFIG : [],
+    });
+    canvas.requestRenderAll();
   }
 
   renderHelperTexts(container: HTMLElement, texts: HelperText[] | null) {

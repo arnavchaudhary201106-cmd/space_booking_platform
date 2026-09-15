@@ -1,3 +1,53 @@
 <div class="position-relative" #venueCanvasContainer>
   <canvas #venueCanvas></canvas>
+
+  <div
+    class="popover bs-popover-top position-absolute"
+    role="tooltip"
+    [class.invisible]="!isBorderTooltipVisible()"
+    [ngStyle]="{ left: borderTooltipPosition().x + 'px', top: borderTooltipPosition().y + 'px' }"
+    #borderTooltip
+    (mouseleave)="hideBorderTooltip()"
+  >
+    <div class="popover-arrow position-absolute start-50 translate-middle-x"></div>
+    <div class="popover-body p-2 text-center">
+      <p class="small fw-bold mb-2">Mark border as:</p>
+      <div class="btn-group btn-group-sm disabled-cursor" role="group">
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="isHoveredBorderOpen()"
+          (click)="setHoveredBorderState(true)"
+        >
+          Open
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          [disabled]="!isHoveredBorderOpen()"
+          (click)="setHoveredBorderState(false)"
+        >
+          Closed
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="popover bs-popover-top position-absolute"
+    role="tooltip"
+    [class.invisible]="!isStallTooltipVisible()"
+    [ngStyle]="{ left: stallTooltipPosition().x + 'px', top: stallTooltipPosition().y + 'px' }"
+    #stallTooltip
+    (mouseleave)="hideStallTooltip()"
+  >
+    <div class="popover-arrow position-absolute start-50 translate-middle-x"></div>
+    <div class="popover-body p-2 text-center">
+      <p class="small fw-bold mb-2">Actions:</p>
+      <div class="btn-group btn-group-sm" role="group">
+        <button type="button" class="btn btn-primary" (click)="bookStall()">Book</button>
+        <button type="button" class="btn btn-warning" (click)="removeMarkedArea()">Remove</button>
+      </div>
+    </div>
+  </div>
 </div>

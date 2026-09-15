@@ -23,6 +23,7 @@ export class MarkSpace implements OnInit, AfterViewInit {
 
   @ViewChild('panzoom') private panzoomRef!: ElementRef<HTMLDivElement>;
   @ViewChild('venueLayoutContainer') private venueLayoutContainerRef!: ElementRef<HTMLDivElement>;
+  @ViewChild(VenueRenderer) private venueRenderer!: VenueRenderer;
 
   constructor(
     private title: Title,
@@ -105,5 +106,13 @@ export class MarkSpace implements OnInit, AfterViewInit {
     }
 
     this.panzoomInstance!.smoothZoomAbs(x, y, scale - 0.125);
+  }
+
+  removeAllMarkedAreas() {
+    if (!confirm('Are you sure you want to remove all marked areas?')) {
+      return;
+    }
+
+    this.venueRenderer.removeAllMarkedAreas();
   }
 }

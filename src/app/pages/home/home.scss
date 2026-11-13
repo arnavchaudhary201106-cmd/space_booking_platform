@@ -1,0 +1,34 @@
+.hero {
+  background: linear-gradient(135deg, #e8f1ff 0%, #f6f9ff 60%, #ffffff 100%);
+  border: 1px solid #dbe7fb;
+}
+
+.feature-card {
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+
+  &:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+}
+
+.step-number {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.cta {
+  background: linear-gradient(135deg, #0b5ed7 0%, #084298 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-card {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}

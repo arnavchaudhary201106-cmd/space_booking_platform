@@ -1,8 +1,10 @@
 <app-navbar></app-navbar>
 
-<div class="container pt-4 pb-5">
+<main class="container pt-4 pb-5 flex-grow-1">
   <router-outlet />
-</div>
+</main>
+
+<app-footer></app-footer>
 
 @if (loaderService.isVisible$ | async) {
   <app-loader></app-loader>

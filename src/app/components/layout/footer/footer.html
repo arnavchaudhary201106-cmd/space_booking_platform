@@ -1,0 +1,46 @@
+<footer class="site-footer bg-light border-top mt-auto">
+  <div class="container py-4">
+    <div class="row g-4">
+      <div class="col-md-5">
+        <a
+          class="d-inline-flex align-items-center gap-2 text-decoration-none text-body fw-semibold mb-2"
+          routerLink="/"
+        >
+          <img src="images/logo.png" alt="" width="28" height="28" />
+          Space Booking Platform
+        </a>
+        <p class="small text-secondary mb-0">
+          Schedule events, view venue floor plans and book stalls without double bookings.
+        </p>
+      </div>
+
+      <nav class="col-6 col-md-3" aria-label="Explore">
+        <h2 class="fs-6 fw-bold mb-2">Explore</h2>
+        <ul class="list-unstyled small mb-0 d-grid gap-1">
+          <li><a class="link-secondary" routerLink="/">Home</a></li>
+          @if (auth.isLoggedIn()) {
+            <li><a class="link-secondary" routerLink="/venues">Venues</a></li>
+            <li><a class="link-secondary" routerLink="/events">Events</a></li>
+          }
+        </ul>
+      </nav>
+
+      <nav class="col-6 col-md-4" aria-label="Account">
+        <h2 class="fs-6 fw-bold mb-2">Account</h2>
+        <ul class="list-unstyled small mb-0 d-grid gap-1">
+          @if (auth.isLoggedIn()) {
+            @if (auth.canManage()) {
+              <li><a class="link-secondary" routerLink="/create-user">Create user</a></li>
+            }
+            <li><a class="link-secondary" routerLink="/change-password">Change password</a></li>
+          } @else {
+            <li><a class="link-secondary" routerLink="/login">Login</a></li>
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <hr class="my-3" />
+    <p class="small text-secondary mb-0">&copy; {{ year }} Space Booking Platform</p>
+  </div>
+</footer>

@@ -1,7 +1,144 @@
-<h1 class="fs-2 text-primary mb-3">Welcome to Space Booking Platform</h1>
+<!-- Hero -->
+<section class="hero rounded-4 p-4 p-md-5 mb-5">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-7">
+      @if (auth.user(); as user) {
+        <p class="small fw-semibold text-primary mb-2">Welcome back, {{ user.firstName }}</p>
+      } @else {
+        <p class="small fw-semibold text-primary mb-2">Space Booking Platform</p>
+      }
 
-<p class="text-secondary">
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ut possimus voluptatibus,
-  iusto, dolorem accusamus, animi minus distinctio eveniet consequatur doloremque exercitationem
-  rerum iure delectus officiis sequi soluta culpa beatae!
-</p>
+      <h1 class="display-5 fw-bold mb-3">Plan events and book every stall in one place.</h1>
+      <p class="lead text-secondary mb-4">
+        Schedule events across your venues, see each floor plan to scale and book stalls on it,
+        without double bookings.
+      </p>
+
+      <div class="d-flex flex-wrap gap-2">
+        @if (auth.isLoggedIn()) {
+          <a class="btn btn-primary btn-lg" routerLink="/events">
+            {{ auth.canManage() ? 'Manage events' : 'View events' }}
+          </a>
+          <a class="btn btn-outline-primary btn-lg" routerLink="/venues">Browse venues</a>
+        } @else {
+          <a class="btn btn-primary btn-lg" routerLink="/login">Login</a>
+          <a class="btn btn-outline-primary btn-lg" href="#how-it-works">How it works</a>
+        }
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="hero-card rounded-4 bg-white shadow-sm p-4">
+        <p class="small text-secondary mb-3">At a glance</p>
+        <ul class="list-unstyled mb-0 d-grid gap-3">
+          <li class="d-flex align-items-baseline gap-3">
+            <span class="fs-2 fw-bold text-primary lh-1">{{ venues.length }}</span>
+            <span>venues with full floor plans</span>
+          </li>
+          <li class="d-flex align-items-baseline gap-3">
+            <span class="fs-2 fw-bold text-primary lh-1">1</span>
+            <span>event per venue at any time</span>
+          </li>
+          <li class="d-flex align-items-baseline gap-3">
+            <span class="fs-2 fw-bold text-primary lh-1">3</span>
+            <span>roles: super admin, admin and viewer</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="mb-5">
+  <h2 class="fs-3 mb-1">Everything you need to run an event</h2>
+  <p class="text-secondary mb-4">From the first booking to the last stall.</p>
+
+  <div class="row g-3">
+    @for (feature of features; track feature.title) {
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card h-100 border rounded-3 p-3 bg-white">
+          <h3 class="fs-5 mb-2">{{ feature.title }}</h3>
+          <p class="text-secondary mb-0">{{ feature.text }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how-it-works" class="mb-5">
+  <h2 class="fs-3 mb-1">How it works</h2>
+  <p class="text-secondary mb-4">Four steps from sign-in to a booked stall.</p>
+
+  <ol class="row g-3 list-unstyled mb-0">
+    @for (step of steps; track step.title; let i = $index) {
+      <li class="col-sm-6 col-lg-3">
+        <div class="d-flex gap-3">
+          <span
+            class="step-number flex-shrink-0 d-inline-flex align-items-center justify-content-center rounded-circle bg-primary text-white fw-bold"
+            aria-hidden="true"
+            >{{ i + 1 }}</span
+          >
+          <div>
+            <h3 class="fs-6 fw-bold mb-1">{{ step.title }}</h3>
+            <p class="small text-secondary mb-0">{{ step.text }}</p>
+          </div>
+        </div>
+      </li>
+    }
+  </ol>
+</section>
+
+<!-- Venues -->
+<section class="mb-5">
+  <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-4">
+    <div>
+      <h2 class="fs-3 mb-1">Our venues</h2>
+      <p class="text-secondary mb-0">Open a layout to see exits, facilities and stall space.</p>
+    </div>
+    <a class="btn btn-outline-primary btn-sm" routerLink="/venues">All venues</a>
+  </div>
+
+  <div class="row g-3">
+    @for (venue of venues; track venue.id) {
+      <div class="col-md-6">
+        <app-venue-card class="d-block h-100" [venue]="venue"></app-venue-card>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Roles -->
+<section class="mb-5">
+  <h2 class="fs-3 mb-1">Who can do what</h2>
+  <p class="text-secondary mb-4">Accounts are created by admins, so only your team gets in.</p>
+
+  <div class="row g-3">
+    @for (role of roles; track role.name) {
+      <div class="col-md-4">
+        <div class="h-100 border rounded-3 p-3 bg-white">
+          <h3 class="fs-5 mb-2">{{ role.name }}</h3>
+          <ul class="mb-0 ps-3 text-secondary">
+            @for (item of role.can; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Call to action -->
+<section class="cta rounded-4 p-4 p-md-5 text-center text-white">
+  @if (auth.isLoggedIn()) {
+    <h2 class="fs-3 mb-2">Ready to book?</h2>
+    <p class="mb-4 opacity-75">Open an event and choose a venue to start placing stalls.</p>
+    <a class="btn btn-light btn-lg" routerLink="/events">Go to events</a>
+  } @else {
+    <h2 class="fs-3 mb-2">Ready to get started?</h2>
+    <p class="mb-4 opacity-75">Sign in with the account your admin created for you.</p>
+    <a class="btn btn-light btn-lg" routerLink="/login">Login</a>
+  }
+</section>

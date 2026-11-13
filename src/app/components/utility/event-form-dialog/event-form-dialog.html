@@ -1,0 +1,127 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit Event' : 'Create Event' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <mat-dialog-content>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Event name</mat-label>
+      <input matInput type="text" formControlName="name" maxlength="255" />
+      <mat-error>Event name is required.</mat-error>
+    </mat-form-field>
+
+    <!-- Date and time are picked from the calendar and clock; typing is disabled. -->
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Start date &amp; time</mat-label>
+      <input
+        matInput
+        readonly
+        class="picker-input"
+        [mtxDatetimepicker]="startPicker"
+        [min]="minStart"
+        formControlName="start"
+        (click)="startPicker.open()"
+      />
+      <mtx-datetimepicker-toggle matIconSuffix [for]="startPicker"></mtx-datetimepicker-toggle>
+      <mtx-datetimepicker
+        #startPicker
+        type="datetime"
+        mode="portrait"
+        [twelvehour]="true"
+        [startAt]="minStart"
+      ></mtx-datetimepicker>
+      <mat-error>
+        @if (form.controls.start.hasError('mtxDatetimepickerMin')) {
+          Start cannot be in the past.
+        } @else {
+          Start date and time is required.
+        }
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>End date &amp; time</mat-label>
+      <input
+        matInput
+        readonly
+        class="picker-input"
+        [mtxDatetimepicker]="endPicker"
+        [min]="form.controls.start.value ?? minStart"
+        formControlName="end"
+        (click)="endPicker.open()"
+      />
+      <mtx-datetimepicker-toggle matIconSuffix [for]="endPicker"></mtx-datetimepicker-toggle>
+      <mtx-datetimepicker
+        #endPicker
+        type="datetime"
+        mode="portrait"
+        [twelvehour]="true"
+        [startAt]="form.controls.start.value ?? minStart"
+      ></mtx-datetimepicker>
+      <mat-error>
+        @if (form.controls.end.hasError('mtxDatetimepickerMin')) {
+          End cannot be before the start.
+        } @else {
+          End date and time is required.
+        }
+      </mat-error>
+    </mat-form-field>
+
+    @if (isPastStart) {
+      <div class="text-danger small mb-3" role="alert">
+        Start date and time cannot be in the past.
+      </div>
+    }
+
+    @if (isDateRangeInvalid) {
+      <div class="text-danger small mb-3" role="alert">
+        End date and time cannot be before the start date and time.
+      </div>
+    }
+
+    <div class="mb-3">
+      <label class="form-label" for="event-description">Description</label>
+      <textarea
+        id="event-description"
+        class="form-control"
+        rows="3"
+        formControlName="description"
+      ></textarea>
+    </div>
+
+    <fieldset class="mb-2">
+      <legend class="form-label fs-6">Venues</legend>
+      @for (venue of venues; track venue.id) {
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [id]="'event-venue-' + venue.id"
+            [checked]="isVenueSelected(venue.id)"
+            (change)="toggleVenue(venue.id, $any($event.target).checked)"
+          />
+          <label class="form-check-label" [for]="'event-venue-' + venue.id">{{ venue.name }}</label>
+        </div>
+      }
+      @if (form.controls.venueIds.touched && !form.controls.venueIds.value?.length) {
+        <div class="text-danger small mt-1">Select at least one venue.</div>
+      }
+    </fieldset>
+
+    @if (errorMessage()) {
+      <div class="alert alert-danger mt-3 mb-0" role="alert">{{ errorMessage() }}</div>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      mat-dialog-close
+      [disabled]="isSaving()"
+    >
+      Cancel
+    </button>
+    <button type="submit" class="btn btn-primary ms-2" [disabled]="isSaving()">
+      {{ isEdit ? 'Save' : 'Create' }}
+    </button>
+  </mat-dialog-actions>
+</form>

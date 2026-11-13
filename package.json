@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently -k -n api,web -c blue,green \"npm:start:api\" \"npm:start:web\"",
+    "start:api": "cd backend && mvn spring-boot:run",
+    "start:web": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -31,6 +33,7 @@
     "@angular/material": "~21.1.4",
     "@angular/platform-browser": "^21.1.0",
     "@angular/router": "^21.1.0",
+    "@ng-matero/extensions": "^21.3.1",
     "bootstrap": "^5.3.8",
     "fabric": "^5.5.2",
     "panzoom": "^9.4.3",
@@ -41,8 +44,8 @@
     "@angular/build": "^21.1.4",
     "@angular/cli": "^21.1.4",
     "@angular/compiler-cli": "^21.1.0",
-    "@angular/material": "^21.1.4",
     "@types/fabric": "^5.3.11",
+    "concurrently": "^9.2.5",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"

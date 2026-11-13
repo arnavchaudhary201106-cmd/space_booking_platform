@@ -4,6 +4,7 @@ import { COLORS, DASHED_BORDER_CONFIG, METERS_TO_PIXELS } from '../constants/ven
 import { ExitLabel, HelperText, NonClickableArea } from '../models/venue.model';
 import { StallRect } from '../models/stall-rect.model';
 import { BorderLine } from '../models/border-line.model';
+import { BorderDirection } from '../models/border-direction.model';
 
 @Injectable({
   providedIn: 'root',
@@ -140,6 +141,8 @@ export class LayoutRendererService {
     coords,
     color,
     groupId,
+    cellKey,
+    direction,
     onMouseOver,
     onMouseOut,
   }: {
@@ -147,6 +150,8 @@ export class LayoutRendererService {
     coords: [number, number, number, number];
     color: string;
     groupId: number;
+    cellKey: string;
+    direction: BorderDirection;
     onMouseOver: (event: fabric.IEvent<MouseEvent>) => void;
     onMouseOut: (event: fabric.IEvent<MouseEvent>) => void;
   }): BorderLine {
@@ -159,6 +164,8 @@ export class LayoutRendererService {
       hoverCursor: 'pointer',
     });
     border.groupId = groupId;
+    border.cellKey = cellKey;
+    border.direction = direction;
 
     border.on('mouseover', onMouseOver);
     border.on('mouseout', onMouseOut);
@@ -171,8 +178,10 @@ export class LayoutRendererService {
     canvas.remove(object);
   }
 
-  setBorderState(canvas: fabric.Canvas, border: fabric.Line, isOpen: boolean) {
+  // Open borders are dashed. `color` is applied as the stroke when given.
+  setBorderState(canvas: fabric.Canvas, border: fabric.Line, isOpen: boolean, color?: string) {
     border.set({
+      ...(color ? { stroke: color } : {}),
       strokeDashArray: isOpen ? DASHED_BORDER_CONFIG : [],
     });
     canvas.requestRenderAll();

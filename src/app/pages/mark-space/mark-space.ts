@@ -8,6 +8,11 @@ import { BackButton } from '../../components/utility/back-button/back-button';
 import { MIN_ZOOM, MAX_ZOOM, METERS_TO_PIXELS } from '../../constants/venue-layout';
 import { CursorMode } from '../../models/cursor-mode.model';
 import { VenueLayout } from '../../models/venue.model';
+import { BorderRef, Stall, StallCell } from '../../models/stall.model';
+import { StallService } from '../../services/stall.service';
+import { MatDialog } from '@angular/material/dialog';
+import { BookingDialog } from '../../components/utility/booking-dialog/booking-dialog';
+import { EventData } from '../../resolvers/event-data.resolver';
 
 @Component({
   selector: 'app-mark-space',
@@ -17,6 +22,11 @@ import { VenueLayout } from '../../models/venue.model';
 })
 export class MarkSpace implements OnInit, AfterViewInit {
   venueLayout!: VenueLayout;
+  bookedStalls: Stall[] = [];
+  eventName = '';
+  errorMessage = '';
+  eventId?: number;
+  venueId!: number;
   readonly CursorMode = CursorMode;
   currentCursorMode = CursorMode.drag;
   private panzoomInstance!: PanZoom;
@@ -28,11 +38,20 @@ export class MarkSpace implements OnInit, AfterViewInit {
   constructor(
     private title: Title,
     private route: ActivatedRoute,
+    private stallService: StallService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
     this.title.setTitle('Mark Space');
     this.venueLayout = this.route.snapshot.data['venueLayout'];
+    const eventData: EventData | null = this.route.snapshot.data['eventData'];
+    this.bookedStalls = eventData?.stalls ?? [];
+    this.eventName = eventData?.event.name ?? '';
+
+    const { eventId, venueId } = this.route.snapshot.queryParams;
+    this.venueId = Number(venueId);
+    this.eventId = eventId ? Number(eventId) : undefined;
   }
 
   ngAfterViewInit() {
@@ -114,5 +133,49 @@ export class MarkSpace implements OnInit, AfterViewInit {
     }
 
     this.venueRenderer.removeAllMarkedAreas();
+  }
+
+  bookStall({ groupId, cells }: { groupId: number; cells: StallCell[] }) {
+    if (this.eventId === undefined) {
+      return;
+    }
+
+    this.errorMessage = '';
+    const { cellWidth, cellHeight } = this.venueLayout.layoutData;
+
+    this.dialog
+      .open(BookingDialog, {
+        width: '32rem',
+        maxWidth: '95vw',
+        data: {
+          eventId: this.eventId,
+          venueId: this.venueId,
+          eventName: this.eventName,
+          venueName: this.venueLayout.name,
+          cells,
+          area: Math.round(cells.length * cellWidth * cellHeight * 100) / 100,
+        },
+      })
+      .afterClosed()
+      .subscribe((stall?: Stall) => {
+        if (stall) {
+          this.venueRenderer.markGroupAsBooked(groupId, stall);
+        }
+      });
+  }
+
+  // Persists opened/closed borders of a booked stall; undoes the change if the request fails.
+  updateBorders(change: { stall: Stall; open: boolean; borders: BorderRef[]; revert: () => void }) {
+    this.errorMessage = '';
+
+    this.stallService
+      .updateBorders(this.eventId!, this.venueId, change.stall.id, change.open, change.borders)
+      .subscribe({
+        error: (err) => {
+          change.revert();
+          this.errorMessage =
+            err?.error?.detail || 'Could not update the border. Please try again.';
+        },
+      });
   }
 }

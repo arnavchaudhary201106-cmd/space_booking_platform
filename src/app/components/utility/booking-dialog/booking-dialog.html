@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>Book Stall</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <mat-dialog-content>
+    <dl class="row small mb-3">
+      <dt class="col-4">Event</dt>
+      <dd class="col-8">{{ data.eventName }}</dd>
+      <dt class="col-4">Venue</dt>
+      <dd class="col-8">{{ data.venueName }}</dd>
+      <dt class="col-4">Stall size</dt>
+      <dd class="col-8 mb-0">
+        {{ data.cells.length }} {{ data.cells.length === 1 ? 'cell' : 'cells' }} ({{
+          data.area
+        }}
+        m²)
+      </dd>
+    </dl>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Stall name</mat-label>
+      <input matInput type="text" formControlName="stallName" maxlength="255" />
+      <mat-error>Stall name is required.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Name (optional)</mat-label>
+      <input matInput type="text" formControlName="name" maxlength="255" autocomplete="name" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Contact (optional)</mat-label>
+      <input matInput type="text" formControlName="contact" maxlength="255" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Description (optional)</mat-label>
+      <textarea matInput rows="3" formControlName="description" maxlength="1000"></textarea>
+    </mat-form-field>
+
+    @if (errorMessage()) {
+      <div class="alert alert-danger mb-0" role="alert">{{ errorMessage() }}</div>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      mat-dialog-close
+      [disabled]="isSaving()"
+    >
+      Cancel
+    </button>
+    <button type="submit" class="btn btn-primary ms-2" [disabled]="isSaving()">Book</button>
+  </mat-dialog-actions>
+</form>

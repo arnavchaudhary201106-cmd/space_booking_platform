@@ -1,0 +1,30 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+  <h1 class="fs-2 text-primary mb-0">Events</h1>
+  <button type="button" class="btn btn-primary" (click)="openForm()">Create Event</button>
+</div>
+
+@if (errorMessage()) {
+  <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+}
+
+@if (isLoading()) {
+  <div class="d-flex justify-content-center align-items-center py-5" role="status">
+    <mat-spinner diameter="48" aria-label="Loading events"></mat-spinner>
+  </div>
+}
+
+@if (hasLoaded() && !isLoading() && events().length === 0) {
+  <p class="text-secondary">No events yet. Click <b>Create Event</b> to add one.</p>
+}
+
+<ul class="row list list-unstyled mt-3" [class.opacity-50]="isLoading()">
+  @for (event of events(); track event.id) {
+    <li class="col-md-6 col-lg-4 mb-4">
+      <app-event-card
+        [event]="event"
+        (edit)="openForm($event)"
+        (remove)="deleteEvent($event)"
+      ></app-event-card>
+    </li>
+  }
+</ul>

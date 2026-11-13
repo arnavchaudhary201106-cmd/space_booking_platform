@@ -2,7 +2,9 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
+  Output,
   OnDestroy,
   ViewChild,
   signal,
@@ -16,6 +18,7 @@ import { StallRect } from '../../../models/stall-rect.model';
 import { BorderLine } from '../../../models/border-line.model';
 import { BorderDirection } from '../../../models/border-direction.model';
 import { MarkedStall } from '../../../models/marked-stall.model';
+import { BorderRef, Stall, StallCell } from '../../../models/stall.model';
 
 const BORDER_DIRECTIONS: BorderDirection[] = ['top', 'bottom', 'left', 'right'];
 const BORDER_INSET = 2;
@@ -32,6 +35,18 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
   canvas!: fabric.Canvas;
 
   @Input({ required: true }) venueLayout!: VenueLayout;
+  // Already booked stalls; they are highlighted and can't be unmarked or removed.
+  @Input() bookedStalls: Stall[] = [];
+  // Whether stalls can be booked (only when opened from an event).
+  @Input() canBook = false;
+  @Output() bookRequested = new EventEmitter<{ groupId: number; cells: StallCell[] }>();
+  // Emitted when borders of a booked stall are opened/closed; `revert` restores the previous state.
+  @Output() bordersChanged = new EventEmitter<{
+    stall: Stall;
+    open: boolean;
+    borders: BorderRef[];
+    revert: () => void;
+  }>();
 
   @ViewChild('venueCanvas') private venueCanvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('venueCanvasContainer') private venueCanvasContainerRef!: ElementRef<HTMLDivElement>;
@@ -43,6 +58,7 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
   borderTooltipPosition = signal({ x: 0, y: 0 });
   isStallTooltipVisible = signal(false);
   stallTooltipPosition = signal({ x: 0, y: 0 });
+  hoveredStall = signal<Stall | null>(null);
 
   private rows = 0;
   private cols = 0;
@@ -51,6 +67,7 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
   private nonClickableRects: { left: number; top: number; width: number; height: number }[] = [];
   private markedStalls = new Map<string, MarkedStall>();
   private groupColors = new Map<number, string>();
+  private bookedGroups = new Map<number, Stall>();
   private nextGroupId = 0;
   private hoveredBorderLines: BorderLine[] = [];
   private hoveredGroupId?: number;
@@ -64,6 +81,7 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.renderVenueLayout();
     this.addStallMarkingListeners();
+    this.loadStalls(this.bookedStalls);
   }
 
   ngOnDestroy() {
@@ -155,6 +173,9 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
     }
 
     if (target instanceof StallRect) {
+      if (this.bookedGroups.has(target.groupId)) {
+        return;
+      }
       this.unmarkStall(target.cellKey);
       return;
     }
@@ -290,8 +311,7 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
     }
   }
 
-  private markStalls(cellKeys: string[]) {
-    const groupId = this.nextGroupId++;
+  private markStalls(cellKeys: string[], groupId = this.nextGroupId++) {
     this.groupColors.set(groupId, GROUP_BORDER_COLORS[groupId % GROUP_BORDER_COLORS.length]);
 
     cellKeys.forEach((key) => {
@@ -336,16 +356,21 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
       return;
     }
 
+    // Keep the open/closed state of borders that get re-created.
+    const openDirections = new Set<BorderDirection>();
+
     BORDER_DIRECTIONS.forEach((direction) => {
       const existingBorder = stall.borders[direction];
       if (existingBorder) {
+        if (existingBorder.strokeDashArray?.length) {
+          openDirections.add(direction);
+        }
         this.layoutRendererService.removeCanvasObject(this.canvas, existingBorder);
       }
     });
     stall.borders = {};
 
     const [row, col] = cellKey.split(',').map(Number);
-    const color = this.groupColors.get(stall.groupId)!;
 
     BORDER_DIRECTIONS.forEach((direction) => {
       const neighborKey = this.getNeighborKey(row, col, direction);
@@ -358,11 +383,16 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
       stall.borders[direction] = this.layoutRendererService.createBorderLine({
         canvas: this.canvas,
         coords: this.getEdgeCoords(row, col, direction),
-        color,
+        color: this.groupColors.get(stall.groupId)!,
         groupId: stall.groupId,
+        cellKey,
+        direction,
         onMouseOver: (event) => this.onBorderMouseOver(event),
         onMouseOut: (event) => this.onBorderMouseOut(event),
       });
+
+      const border = stall.borders[direction]!;
+      this.setLineState(border, openDirections.has(direction));
     });
   }
 
@@ -428,6 +458,72 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
     this.canvas.requestRenderAll();
   }
 
+  private loadStalls(stalls: Stall[]) {
+    stalls.forEach((stall) => {
+      // Ignore cells that no longer fit the layout.
+      const cells = stall.cells.filter((cell) => cell.row < this.rows && cell.col < this.cols);
+      if (!cells.length) {
+        return;
+      }
+
+      const groupId = this.nextGroupId++;
+      this.markStalls(
+        cells.map(({ row, col }) => `${row},${col}`),
+        groupId,
+      );
+      this.applyBookedStyle(groupId, stall);
+
+      cells.forEach(({ row, col, openBorders }) => {
+        const marked = this.markedStalls.get(`${row},${col}`);
+        openBorders.forEach((direction) => {
+          const border = marked?.borders[direction];
+          if (border) {
+            this.setLineState(border, true);
+          }
+        });
+      });
+    });
+
+    this.canvas.requestRenderAll();
+  }
+
+  /** Highlights a stall group as booked and locks it against unmarking/removal. */
+  markGroupAsBooked(groupId: number, stall: Stall) {
+    this.applyBookedStyle(groupId, stall);
+    this.canvas.requestRenderAll();
+  }
+
+  private applyBookedStyle(groupId: number, stall: Stall) {
+    this.bookedGroups.set(groupId, stall);
+
+    this.markedStalls.forEach((marked) => {
+      if (marked.groupId === groupId) {
+        marked.rect.set('fill', COLORS.bookedStallFill);
+
+        BORDER_DIRECTIONS.forEach((direction) => {
+          const border = marked.borders[direction];
+          if (border) {
+            this.setLineState(border, !!border.strokeDashArray?.length);
+          }
+        });
+      }
+    });
+  }
+
+  /**
+   * Sets a border open (dashed) or closed (solid). Borders of booked stalls are dark blue when
+   * closed and red when open; borders of marked-only stalls keep their group color.
+   */
+  private setLineState(border: BorderLine, isOpen: boolean) {
+    const color = this.bookedGroups.has(border.groupId)
+      ? isOpen
+        ? COLORS.bookedBorderOpen
+        : COLORS.bookedBorderClosed
+      : this.groupColors.get(border.groupId);
+
+    this.layoutRendererService.setBorderState(this.canvas, border, isOpen, color);
+  }
+
   private getAllBorderLines(): BorderLine[] {
     return Array.from(this.markedStalls.values()).flatMap((stall) =>
       BORDER_DIRECTIONS.map((direction) => stall.borders[direction]).filter(
@@ -483,15 +579,37 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
       return;
     }
 
-    this.hoveredBorderLines.forEach((line) =>
-      this.layoutRendererService.setBorderState(this.canvas, line, isOpen),
-    );
+    const lines = this.hoveredBorderLines;
+    const previousStates = lines.map((line) => !!line.strokeDashArray?.length);
+
+    const apply = (states: boolean[]) =>
+      lines.forEach((line, index) => this.setLineState(line, states[index]));
+
+    apply(lines.map(() => isOpen));
     this.isHoveredBorderOpen.set(isOpen);
+
+    // Borders of a booked stall are persisted right away.
+    const stall = this.bookedGroups.get(lines[0].groupId);
+    if (stall) {
+      this.bordersChanged.emit({
+        stall,
+        open: isOpen,
+        borders: lines.map((line) => {
+          const [row, col] = line.cellKey.split(',').map(Number);
+          return { row, col, direction: line.direction };
+        }),
+        revert: () => {
+          apply(previousStates);
+          this.isHoveredBorderOpen.set(previousStates[0]);
+        },
+      });
+    }
   }
 
   private onStallMouseOver(event: fabric.IEvent<MouseEvent>) {
     const rect = event.target as StallRect;
     this.hoveredGroupId = rect.groupId;
+    this.hoveredStall.set(this.bookedGroups.get(rect.groupId) ?? null);
 
     const groupStalls = Array.from(this.markedStalls.values()).filter(
       (stall) => stall.groupId === rect.groupId,
@@ -528,7 +646,25 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
   }
 
   bookStall() {
-    alert('This feature is under development.');
+    if (this.hoveredGroupId === undefined) {
+      return;
+    }
+
+    const groupId = this.hoveredGroupId;
+    const cells: StallCell[] = [];
+
+    this.markedStalls.forEach((stall, cellKey) => {
+      if (stall.groupId === groupId) {
+        const [row, col] = cellKey.split(',').map(Number);
+        const openBorders = BORDER_DIRECTIONS.filter(
+          (direction) => !!stall.borders[direction]?.strokeDashArray?.length,
+        );
+        cells.push({ row, col, openBorders });
+      }
+    });
+
+    this.isStallTooltipVisible.set(false);
+    this.bookRequested.emit({ groupId, cells });
   }
 
   removeMarkedArea() {
@@ -543,21 +679,15 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
     this.removeGroup(this.hoveredGroupId);
   }
 
+  /** Removes every marked stall except booked ones. */
   removeAllMarkedAreas() {
-    this.markedStalls.forEach((stall) => {
-      this.layoutRendererService.removeCanvasObject(this.canvas, stall.rect);
-      BORDER_DIRECTIONS.forEach((direction) => {
-        const border = stall.borders[direction];
-        if (border) {
-          this.layoutRendererService.removeCanvasObject(this.canvas, border);
-        }
-      });
-    });
+    const groupIds = new Set(
+      Array.from(this.markedStalls.values())
+        .map((stall) => stall.groupId)
+        .filter((groupId) => !this.bookedGroups.has(groupId)),
+    );
 
-    this.markedStalls.clear();
-    this.groupColors.clear();
-    this.isStallTooltipVisible.set(false);
+    groupIds.forEach((groupId) => this.removeGroup(groupId));
     this.isBorderTooltipVisible.set(false);
-    this.canvas.requestRenderAll();
   }
 }

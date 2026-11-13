@@ -1,7 +1,18 @@
 <div class="d-flex align-items-center gap-3 mb-4">
   <app-back-button></app-back-button>
-  <h1 class="fs-4 text-primary mb-0">{{ venueLayout.name }}</h1>
+  <h1 class="fs-4 text-primary mb-0">
+    {{ venueLayout.name }}
+    @if (eventName) {
+      <span class="text-secondary"> · {{ eventName }}</span>
+    }
+  </h1>
 </div>
+
+@if (eventId === undefined) {
+  <p class="small text-secondary">
+    <b>NOTE:</b> Preview only. Open this venue from an event to book stalls.
+  </p>
+}
 
 <!-- Toolkit -->
 <ul class="list list-unstyled d-flex gap-3 flex-nowrap overflow-auto mb-3">
@@ -34,6 +45,10 @@
   </li>
 </ul>
 
+@if (errorMessage) {
+  <div class="alert alert-danger py-2" role="alert">{{ errorMessage }}</div>
+}
+
 <!-- Venu layout -->
 <div class="venue-layout-container border rounded shadow-sm overflow-hidden" #venueLayoutContainer>
   <div #panzoom>
@@ -42,7 +57,13 @@
         'pointer-events': currentCursorMode === CursorMode.drag ? 'none' : 'all',
       }"
     >
-      <app-venue-renderer [venueLayout]="venueLayout"></app-venue-renderer>
+      <app-venue-renderer
+        [venueLayout]="venueLayout"
+        [bookedStalls]="bookedStalls"
+        [canBook]="eventId !== undefined"
+        (bookRequested)="bookStall($event)"
+        (bordersChanged)="updateBorders($event)"
+      ></app-venue-renderer>
     </div>
   </div>
 </div>

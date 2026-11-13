@@ -7,7 +7,8 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 To start a local development server, run:
 
 ```bash
-ng serve
+npm start   # starts the Spring Boot API (:8080) and ng serve (:4200) together
+# or individually: npm run start:api / npm run start:web
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
@@ -57,3 +58,24 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Backend (Spring Boot)
+
+The API lives in [`backend/`](backend) (Java 21, Spring Boot 3.5, H2 file database).
+
+```bash
+cd backend
+mvn spring-boot:run   # http://localhost:8080
+mvn test
+```
+
+| Method | Route | Purpose |
+| --- | --- | --- |
+| GET | `/api/venues` | Hardcoded venue list |
+| GET / POST | `/api/events` | List / create events |
+| GET / PUT / DELETE | `/api/events/{id}` | Read / update / delete an event |
+| GET / POST | `/api/events/{eventId}/venues/{venueId}/stalls` | List booked stalls / book a stall (creates it with its cells) |
+| PATCH | `/api/events/{eventId}/venues/{venueId}/stalls/{stallId}/borders` | Mark borders of a booked stall open or closed |
+
+Frontend routes: `/` (home), `/venues`, `/events`, and
+`/mark-space?eventId=<id>&venueId=<id>` (without `eventId` it is a preview only).

@@ -43,11 +43,20 @@
   >
     <div class="popover-arrow position-absolute start-50 translate-middle-x"></div>
     <div class="popover-body p-2 text-center">
-      <p class="small fw-bold mb-2">Actions:</p>
-      <div class="btn-group btn-group-sm" role="group">
-        <button type="button" class="btn btn-primary" (click)="bookStall()">Book</button>
-        <button type="button" class="btn btn-warning" (click)="removeMarkedArea()">Remove</button>
-      </div>
+      @if (hoveredStall(); as stall) {
+        <p class="small fw-bold mb-1 booked-by text-truncate">{{ stall.stallName }}</p>
+        <p class="small text-secondary mb-0 booked-by text-truncate">
+          {{ stall.name || 'Booked' }}
+        </p>
+      } @else {
+        <p class="small fw-bold mb-2">Actions:</p>
+        <div class="btn-group btn-group-sm" role="group">
+          @if (canBook) {
+            <button type="button" class="btn btn-primary" (click)="bookStall()">Book</button>
+          }
+          <button type="button" class="btn btn-warning" (click)="removeMarkedArea()">Remove</button>
+        </div>
+      }
     </div>
   </div>
 </div>

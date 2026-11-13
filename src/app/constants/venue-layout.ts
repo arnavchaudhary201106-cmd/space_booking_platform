@@ -12,8 +12,14 @@ export const COLORS = {
   markedSpace: 'gray',
   markedSpaceBorder: 'black',
   stallFill: '#D8D8D8',
+  // Translucent so the grid lines underneath stay visible.
+  bookedStallFill: 'rgba(135, 206, 250, 0.3)',
+  // Borders of booked stalls: dark blue when closed, red when open.
+  bookedBorderClosed: '#00008B',
+  bookedBorderOpen: '#FF0000',
 };
 
+// Border colors of marked (not yet booked) stalls; each marked group gets the next one.
 export const GROUP_BORDER_COLORS = [
   '#5210E5',
   '#0D6EFD',

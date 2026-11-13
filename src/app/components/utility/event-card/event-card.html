@@ -1,0 +1,34 @@
+<div class="event-card border rounded shadow-sm p-3 h-100">
+  <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+    <h3 class="fs-4 mb-0">{{ event.name }}</h3>
+    <div class="btn-group btn-group-sm flex-shrink-0">
+      <button type="button" class="btn btn-outline-primary" (click)="edit.emit(event)">Edit</button>
+      <button type="button" class="btn btn-outline-danger" (click)="remove.emit(event)">
+        Delete
+      </button>
+    </div>
+  </div>
+
+  <p class="small text-secondary mb-2">
+    {{ event.startDateTime | date: 'medium' }} – {{ event.endDateTime | date: 'medium' }}
+  </p>
+
+  @if (event.description) {
+    <p class="text-secondary mb-3">{{ event.description }}</p>
+  }
+
+  <p class="small fw-bold mb-2">Venues</p>
+  <ul class="list-group">
+    @for (venue of event.venues; track venue.id) {
+      <li class="list-group-item d-flex justify-content-between align-items-center gap-2">
+        <span>{{ venue.name }}</span>
+        <a
+          class="btn btn-sm btn-primary"
+          routerLink="/mark-space"
+          [queryParams]="{ eventId: event.id, venueId: venue.id }"
+          >Mark Space</a
+        >
+      </li>
+    }
+  </ul>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -8,6 +8,7 @@ import { EventFormDialog } from '../../components/utility/event-form-dialog/even
 import { EventItem } from '../../models/event.model';
 import { EventService } from '../../services/event.service';
 import { LoaderService } from '../../services/loader.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-events',
@@ -16,6 +17,7 @@ import { LoaderService } from '../../services/loader.service';
   styleUrl: './events.scss',
 })
 export class Events implements OnInit {
+  readonly auth = inject(AuthService);
   readonly events = signal<EventItem[]>([]);
   readonly isLoading = signal(true);
   readonly hasLoaded = signal(false);

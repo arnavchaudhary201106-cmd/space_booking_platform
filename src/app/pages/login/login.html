@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+    <h1 class="fs-2 text-primary mb-1">Login</h1>
+    <p class="text-secondary mb-4">Sign in to manage events and stalls.</p>
+
+    @if (errorMessage()) {
+      <div class="alert alert-danger py-2" role="alert">{{ errorMessage() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="mb-3">
+        <label class="form-label" for="identifier">Email or username</label>
+        <input
+          id="identifier"
+          type="text"
+          class="form-control"
+          formControlName="identifier"
+          autocomplete="username"
+          autocapitalize="none"
+          autofocus
+          [class.is-invalid]="form.controls.identifier.touched && form.controls.identifier.invalid"
+        />
+        <div class="invalid-feedback">Email or username is required.</div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label" for="password">Password</label>
+        <div class="input-group has-validation">
+          <input
+            #passwordField
+            id="password"
+            type="password"
+            class="form-control"
+            formControlName="password"
+            autocomplete="current-password"
+            [class.is-invalid]="form.controls.password.touched && form.controls.password.invalid"
+          />
+          <button appPasswordToggle [input]="passwordField"></button>
+          <div class="invalid-feedback">Password is required.</div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="isSubmitting()">
+        @if (isSubmitting()) {
+          <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+          Signing in…
+        } @else {
+          Login
+        }
+      </button>
+    </form>
+  </div>
+</div>

@@ -8,9 +8,8 @@ describe('MarkSpace', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MarkSpace]
-    })
-    .compileComponents();
+      imports: [MarkSpace],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MarkSpace);
     component = fixture.componentInstance;

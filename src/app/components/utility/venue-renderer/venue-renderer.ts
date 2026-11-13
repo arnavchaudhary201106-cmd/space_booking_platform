@@ -39,7 +39,11 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
   @Input() bookedStalls: Stall[] = [];
   // Whether stalls can be booked (only when opened from an event).
   @Input() canBook = false;
+  // Nothing can be marked, removed or have its borders changed; booked stalls can still be hovered.
+  @Input() readOnly = false;
   @Output() bookRequested = new EventEmitter<{ groupId: number; cells: StallCell[] }>();
+  // Emitted when the user asks to delete a booked stall; the parent confirms and calls the API.
+  @Output() deleteRequested = new EventEmitter<Stall>();
   // Emitted when borders of a booked stall are opened/closed; `revert` restores the previous state.
   @Output() bordersChanged = new EventEmitter<{
     stall: Stall;
@@ -55,6 +59,8 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
 
   isBorderTooltipVisible = signal(false);
   isHoveredBorderOpen = signal(false);
+  // Borders of booked stalls can only be changed by users who may book.
+  isHoveredBorderLocked = signal(false);
   borderTooltipPosition = signal({ x: 0, y: 0 });
   isStallTooltipVisible = signal(false);
   stallTooltipPosition = signal({ x: 0, y: 0 });
@@ -166,6 +172,10 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
   }
 
   private onCanvasMouseDown(event: fabric.IEvent<MouseEvent>) {
+    if (this.readOnly) {
+      return;
+    }
+
     const target = event.target;
 
     if (target instanceof fabric.Line) {
@@ -533,6 +543,10 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
   }
 
   private onBorderMouseOver(event: fabric.IEvent<MouseEvent>) {
+    if (this.readOnly) {
+      return;
+    }
+
     const line = event.target as BorderLine;
     const isVertical = line.x1 === line.x2;
 
@@ -545,6 +559,7 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
     );
 
     this.isHoveredBorderOpen.set(!!line.strokeDashArray?.length);
+    this.isHoveredBorderLocked.set(this.bookedGroups.has(line.groupId) && !this.canBook);
 
     const xs = this.hoveredBorderLines.flatMap((border) => [border.x1!, border.x2!]);
     const ys = this.hoveredBorderLines.flatMap((border) => [border.y1!, border.y2!]);
@@ -575,7 +590,7 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
   }
 
   setHoveredBorderState(isOpen: boolean) {
-    if (!this.hoveredBorderLines.length) {
+    if (!this.hoveredBorderLines.length || this.isHoveredBorderLocked()) {
       return;
     }
 
@@ -665,6 +680,29 @@ export class VenueRenderer implements AfterViewInit, OnDestroy {
 
     this.isStallTooltipVisible.set(false);
     this.bookRequested.emit({ groupId, cells });
+  }
+
+  deleteBookedStall() {
+    const stall = this.hoveredStall();
+    if (stall) {
+      this.isStallTooltipVisible.set(false);
+      this.deleteRequested.emit(stall);
+    }
+  }
+
+  /** Removes a booked stall from the canvas after it was deleted on the server. */
+  removeBookedStall(stallId: number) {
+    const entry = Array.from(this.bookedGroups.entries()).find(([, stall]) => stall.id === stallId);
+    if (!entry) {
+      return;
+    }
+
+    const [groupId] = entry;
+    this.bookedGroups.delete(groupId);
+    this.removeGroup(groupId);
+    this.hoveredStall.set(null);
+    this.isStallTooltipVisible.set(false);
+    this.isBorderTooltipVisible.set(false);
   }
 
   removeMarkedArea() {

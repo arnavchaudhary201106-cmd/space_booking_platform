@@ -21,6 +21,11 @@ export class StallService {
     return this.http.post<Stall>(this.url(eventId, venueId), payload);
   }
 
+  // Deletes a booked stall, which frees its cells.
+  deleteStall(eventId: number, venueId: number, stallId: number): Observable<void> {
+    return this.http.delete<void>(`${this.url(eventId, venueId)}/${stallId}`);
+  }
+
   // Marks the given borders of a booked stall as open or closed.
   updateBorders(
     eventId: number,

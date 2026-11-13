@@ -1,12 +1,16 @@
 <div class="event-card border rounded shadow-sm p-3 h-100">
   <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
     <h3 class="fs-4 mb-0">{{ event.name }}</h3>
-    <div class="btn-group btn-group-sm flex-shrink-0">
-      <button type="button" class="btn btn-outline-primary" (click)="edit.emit(event)">Edit</button>
-      <button type="button" class="btn btn-outline-danger" (click)="remove.emit(event)">
-        Delete
-      </button>
-    </div>
+    @if (auth.canManage()) {
+      <div class="btn-group btn-group-sm flex-shrink-0">
+        <button type="button" class="btn btn-outline-primary" (click)="edit.emit(event)">
+          Edit
+        </button>
+        <button type="button" class="btn btn-outline-danger" (click)="remove.emit(event)">
+          Delete
+        </button>
+      </div>
+    }
   </div>
 
   <p class="small text-secondary mb-2">
@@ -26,7 +30,7 @@
           class="btn btn-sm btn-primary"
           routerLink="/mark-space"
           [queryParams]="{ eventId: event.id, venueId: venue.id }"
-          >Mark Space</a
+          >{{ auth.canManage() ? 'Mark Space' : 'View Layout' }}</a
         >
       </li>
     }

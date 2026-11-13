@@ -11,10 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+// The event/stall API needs an admin; role rules are covered in AuthIntegrationTest.
+@WithMockUser(roles = "ADMIN")
 // Fresh database (and event ids starting at 1) for every test.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @TestPropertySource(properties = "spring.datasource.url=jdbc:h2:mem:test")
@@ -137,6 +140,31 @@ class ApiIntegrationTest {
         // The same cell can be booked again for the new event.
         mvc.perform(post("/api/events/2/venues/1/stalls").contentType(MediaType.APPLICATION_JSON).content(stall))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void deletingAStallFreesItsCells() throws Exception {
+        mvc.perform(post("/api/events").contentType(MediaType.APPLICATION_JSON).content(EVENT.replace("[1,2]", "[1]")))
+                .andExpect(status().isCreated());
+        String base = "/api/events/1/venues/1/stalls";
+        String stall = "{\"stallName\":\"S1\",\"cells\":[{\"row\":1,\"col\":1,\"openBorders\":[\"top\"]}]}";
+        String other = stall.replace("S1", "S2").replace("\"col\":1", "\"col\":7");
+        mvc.perform(post(base).contentType(MediaType.APPLICATION_JSON).content(stall)).andExpect(status().isCreated());
+        mvc.perform(post(base).contentType(MediaType.APPLICATION_JSON).content(other)).andExpect(status().isCreated());
+
+        // Wrong event/venue/stall ids are 404/400 and delete nothing.
+        mvc.perform(delete(base + "/99")).andExpect(status().isNotFound());
+        mvc.perform(delete("/api/events/1/venues/2/stalls/1")).andExpect(status().isBadRequest());
+        mvc.perform(delete("/api/events/99/venues/1/stalls/1")).andExpect(status().isNotFound());
+        mvc.perform(get(base)).andExpect(jsonPath("$", hasSize(2)));
+
+        // Only the chosen stall goes.
+        mvc.perform(delete(base + "/1")).andExpect(status().isNoContent());
+        mvc.perform(get(base)).andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0].stallName").value("S2"));
+        mvc.perform(delete(base + "/1")).andExpect(status().isNotFound());
+
+        // The freed cell can be booked again.
+        mvc.perform(post(base).contentType(MediaType.APPLICATION_JSON).content(stall)).andExpect(status().isCreated());
     }
 
     @Test

@@ -16,7 +16,7 @@
         <button
           type="button"
           class="btn btn-primary"
-          [disabled]="isHoveredBorderOpen()"
+          [disabled]="isHoveredBorderOpen() || isHoveredBorderLocked()"
           (click)="setHoveredBorderState(true)"
         >
           Open
@@ -24,7 +24,7 @@
         <button
           type="button"
           class="btn btn-secondary"
-          [disabled]="!isHoveredBorderOpen()"
+          [disabled]="!isHoveredBorderOpen() || isHoveredBorderLocked()"
           (click)="setHoveredBorderState(false)"
         >
           Closed
@@ -48,6 +48,17 @@
         <p class="small text-secondary mb-0 booked-by text-truncate">
           {{ stall.name || 'Booked' }}
         </p>
+        @if (stall.contact) {
+          <p class="small text-secondary mb-0 booked-by text-truncate">{{ stall.contact }}</p>
+        }
+        @if (stall.description) {
+          <p class="small mb-0 mt-1 booked-by text-truncate">{{ stall.description }}</p>
+        }
+        @if (canBook) {
+          <button type="button" class="btn btn-sm btn-danger mt-2" (click)="deleteBookedStall()">
+            Delete stall
+          </button>
+        }
       } @else {
         <p class="small fw-bold mb-2">Actions:</p>
         <div class="btn-group btn-group-sm" role="group">

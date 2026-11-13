@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-sm bg-light">
-  <div class="container">
+  <div class="container flex-wrap gap-2">
     <a class="navbar-brand" title="Space Booking Platform" routerLink="/">
       <img src="images/logo.png" alt="SBP" width="30" height="30" />
       Space Booking Platform
     </a>
 
-    <ul class="navbar-nav flex-row gap-3 ms-auto">
+    <ul class="navbar-nav flex-row flex-wrap align-items-center gap-3 ms-auto">
       <li class="nav-item">
         <a
           class="nav-link"
@@ -15,12 +15,84 @@
           >Home</a
         >
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/venues" routerLinkActive="active">Venues</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/events" routerLinkActive="active">Events</a>
-      </li>
+      @if (auth.isLoggedIn()) {
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/venues" routerLinkActive="active">Venues</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/events" routerLinkActive="active">Events</a>
+        </li>
+        @if (auth.canManage()) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/create-user" routerLinkActive="active">Create User</a>
+          </li>
+        }
+        <li
+          class="nav-item position-relative"
+          (mouseenter)="hovered.set(true)"
+          (mouseleave)="hovered.set(false)"
+        >
+          <button
+            type="button"
+            class="btn btn-link p-0 text-secondary d-flex"
+            aria-label="Account"
+            aria-haspopup="true"
+            [attr.aria-expanded]="isOpen()"
+            (click)="togglePinned()"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+            >
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+              <path
+                fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+              />
+            </svg>
+          </button>
+
+          @if (isOpen() && auth.user(); as user) {
+            <div class="user-menu position-absolute end-0 pt-2">
+              <div class="card shadow-sm" role="region" aria-label="User information">
+                <div class="card-body">
+                  <p class="fw-bold mb-0">{{ user.firstName }} {{ user.lastName }}</p>
+                  <span class="badge text-bg-secondary mb-3">{{ roleLabels[user.role] }}</span>
+
+                  <dl class="small mb-3">
+                    <dt class="text-secondary fw-normal">Username</dt>
+                    <dd class="mb-2 text-break">{{ user.username }}</dd>
+                    <dt class="text-secondary fw-normal">Email</dt>
+                    <dd class="mb-0 text-break">{{ user.email }}</dd>
+                  </dl>
+
+                  <a
+                    class="btn btn-sm btn-outline-primary w-100 mb-2"
+                    routerLink="/change-password"
+                    (click)="close()"
+                    >Change password</a
+                  >
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary w-100"
+                    (click)="logout()"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </li>
+      } @else {
+        <li class="nav-item">
+          <a class="btn btn-sm btn-primary" routerLink="/login">Login</a>
+        </li>
+      }
     </ul>
   </div>
 </nav>

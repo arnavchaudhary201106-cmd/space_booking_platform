@@ -12,6 +12,11 @@
   <p class="small text-secondary">
     <b>NOTE:</b> Preview only. Open this venue from an event to book stalls.
   </p>
+} @else if (!auth.canManage()) {
+  <p class="small text-secondary">
+    <b>NOTE:</b> View only. Choose <b>View Details</b>, then hover a booked stall to see its
+    details.
+  </p>
 }
 
 <!-- Toolkit -->
@@ -25,24 +30,39 @@
       Drag
     </button>
   </li>
-  <li class="flex-shrink-0">
-    <button
-      [ngClass]="currentCursorMode === CursorMode.draw ? 'btn-primary' : 'btn-outline-primary'"
-      class="btn"
-      (click)="switchToDrawMode()"
-    >
-      Draw
-    </button>
-  </li>
+  @if (!auth.canManage()) {
+    <li class="flex-shrink-0">
+      <button
+        [ngClass]="currentCursorMode === CursorMode.view ? 'btn-primary' : 'btn-outline-primary'"
+        class="btn"
+        (click)="switchToViewMode()"
+      >
+        View Details
+      </button>
+    </li>
+  }
+  @if (auth.canManage()) {
+    <li class="flex-shrink-0">
+      <button
+        [ngClass]="currentCursorMode === CursorMode.draw ? 'btn-primary' : 'btn-outline-primary'"
+        class="btn"
+        (click)="switchToDrawMode()"
+      >
+        Draw
+      </button>
+    </li>
+  }
   <li class="flex-shrink-0">
     <button class="btn btn-outline-secondary" (click)="zoomInLayout()">Zoom In</button>
   </li>
   <li class="flex-shrink-0">
     <button class="btn btn-outline-secondary" (click)="zoomOutLayout()">Zoom Out</button>
   </li>
-  <li class="flex-shrink-0">
-    <button class="btn btn-warning" (click)="removeAllMarkedAreas()">Remove All</button>
-  </li>
+  @if (auth.canManage()) {
+    <li class="flex-shrink-0">
+      <button class="btn btn-warning" (click)="removeAllMarkedAreas()">Remove All</button>
+    </li>
+  }
 </ul>
 
 @if (errorMessage) {
@@ -60,9 +80,11 @@
       <app-venue-renderer
         [venueLayout]="venueLayout"
         [bookedStalls]="bookedStalls"
-        [canBook]="eventId !== undefined"
+        [canBook]="eventId !== undefined && auth.canManage()"
+        [readOnly]="!auth.canManage()"
         (bookRequested)="bookStall($event)"
         (bordersChanged)="updateBorders($event)"
+        (deleteRequested)="deleteStall($event)"
       ></app-venue-renderer>
     </div>
   </div>

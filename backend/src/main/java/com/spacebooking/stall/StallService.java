@@ -81,6 +81,14 @@ public class StallService {
         }
     }
 
+    /** Deletes a booked stall; its cells (and borders) go with it, so the area can be booked again. */
+    public void delete(long eventId, long venueId, long stallId) {
+        events.requireEventVenue(eventId, venueId);
+        Stall stall = stalls.findByIdAndEventIdAndVenueId(stallId, eventId, venueId)
+                .orElseThrow(() -> new NotFoundException("Stall " + stallId + " not found"));
+        stalls.delete(stall);
+    }
+
     /** Opens or closes the given borders of a booked stall. */
     public StallResponse updateBorders(long eventId, long venueId, long stallId, BorderUpdateRequest request) {
         events.requireEventVenue(eventId, venueId);

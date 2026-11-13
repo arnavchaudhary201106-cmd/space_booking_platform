@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgClass, NgStyle } from '@angular/common';
 import { Title } from '@angular/platform-browser';
@@ -13,6 +13,7 @@ import { StallService } from '../../services/stall.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BookingDialog } from '../../components/utility/booking-dialog/booking-dialog';
 import { EventData } from '../../resolvers/event-data.resolver';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-mark-space',
@@ -24,6 +25,7 @@ export class MarkSpace implements OnInit, AfterViewInit {
   venueLayout!: VenueLayout;
   bookedStalls: Stall[] = [];
   eventName = '';
+  readonly auth = inject(AuthService);
   errorMessage = '';
   eventId?: number;
   venueId!: number;
@@ -103,6 +105,10 @@ export class MarkSpace implements OnInit, AfterViewInit {
     this.currentCursorMode = CursorMode.drag;
   }
 
+  switchToViewMode() {
+    this.currentCursorMode = CursorMode.view;
+  }
+
   switchToDrawMode() {
     this.currentCursorMode = CursorMode.draw;
   }
@@ -162,6 +168,24 @@ export class MarkSpace implements OnInit, AfterViewInit {
           this.venueRenderer.markGroupAsBooked(groupId, stall);
         }
       });
+  }
+
+  deleteStall(stall: Stall) {
+    if (
+      this.eventId === undefined ||
+      !confirm(`Delete stall "${stall.stallName}"? This cannot be undone.`)
+    ) {
+      return;
+    }
+
+    this.errorMessage = '';
+
+    this.stallService.deleteStall(this.eventId, this.venueId, stall.id).subscribe({
+      next: () => this.venueRenderer.removeBookedStall(stall.id),
+      error: (err) => {
+        this.errorMessage = err?.error?.detail || 'Could not delete the stall. Please try again.';
+      },
+    });
   }
 
   // Persists opened/closed borders of a booked stall; undoes the change if the request fails.

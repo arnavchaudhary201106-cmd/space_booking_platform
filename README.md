@@ -71,11 +71,47 @@ mvn test
 
 | Method | Route | Purpose |
 | --- | --- | --- |
+| POST | `/api/auth/login` | Log in with `identifier` (username or email) + `password`; returns `accessToken`, `refreshToken` and the user |
+| POST | `/api/auth/refresh-token` | Swap a `refreshToken` for a new access + refresh token pair (the old refresh token stops working) |
+| POST | `/api/auth/logout` | Revoke a `refreshToken` |
+| GET | `/api/auth/me` | The signed-in user |
+| POST | `/api/auth/change-password` | Change your own password (`currentPassword`, `newPassword`); returns a new token pair and signs out every other session |
+| POST | `/api/users` | Create a user (username: letters, digits, `_`, `-`; 3–30 chars; at least one letter and one number): super admins any role, admins `ADMIN`/`VIEWER` (403 otherwise) |
+| GET | `/api/users/username-available?username=` | `{ "available": true/false }` (admins only) |
 | GET | `/api/venues` | Hardcoded venue list |
 | GET / POST | `/api/events` | List / create events |
 | GET / PUT / DELETE | `/api/events/{id}` | Read / update / delete an event |
 | GET / POST | `/api/events/{eventId}/venues/{venueId}/stalls` | List booked stalls / book a stall (creates it with its cells) |
+| DELETE | `/api/events/{eventId}/venues/{venueId}/stalls/{stallId}` | Delete a booked stall (frees its cells) |
 | PATCH | `/api/events/{eventId}/venues/{venueId}/stalls/{stallId}/borders` | Mark borders of a booked stall open or closed |
 
-Frontend routes: `/` (home), `/venues`, `/events`, and
+Frontend routes: `/` (home), `/login`, `/create-user` (admins only), `/venues`, `/events`, and
 `/mark-space?eventId=<id>&venueId=<id>` (without `eventId` it is a preview only).
+Everything except `/` and `/login` needs a signed-in user.
+
+### Tokens
+
+- **Access token** (JWT, 1 day): sent as `Authorization: Bearer <token>` on every API call.
+- **Refresh token** (random, 7 days): stored hashed in the database; each one works once. Refreshing
+  returns a new pair, and changing the password revokes all of a user's refresh tokens.
+- The frontend interceptor ([auth.interceptor.ts](src/app/interceptors/auth.interceptor.ts)) calls
+  `/api/auth/refresh-token` when an API call returns 401, then re-sends that call with the new token.
+  Calls that fail while the refresh is running wait for it and are re-sent with the same new token.
+  If the refresh token is also rejected, the user is signed out and sent to `/login`.
+- Lifetimes: `app.jwt.access-token-minutes` and `app.jwt.refresh-token-days` in `application.properties`.
+
+### Users and roles
+
+| Role | Can do |
+| --- | --- |
+| `SUPER_ADMIN` | Everything an admin can, plus creating other super admins. The first one is seeded on startup. |
+| `ADMIN` | Create `ADMIN` / `VIEWER` users (not super admins); create, edit and delete events; book stalls and change their borders. |
+| `VIEWER` | View events, venues and booked stalls. |
+
+On first start a super admin is created: username `superadmin`, password `ChangeMe@123`. Change these
+before deploying with the environment variables `APP_SUPER_ADMIN_USERNAME`, `APP_SUPER_ADMIN_EMAIL`,
+`APP_SUPER_ADMIN_PASSWORD`, and set `APP_JWT_SECRET` (at least 32 characters) to sign tokens.
+Usernames are 3–30 characters (letters, digits, `_`, `-`) with at least one letter and one number;
+the seeded `superadmin` name is the one exception because it bypasses the API.
+The seed only runs when no super admin exists, so it won't change an existing database.
+The H2 console (`/h2-console`) is open without a login, so keep it for local development only.

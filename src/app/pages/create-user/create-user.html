@@ -1,0 +1,153 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+    <h1 class="fs-2 text-primary mb-1">Create User</h1>
+    <p class="text-secondary mb-4">
+      Admins can edit events and book stalls. Viewers can only look at them.
+      @if (roles.length > 2) {
+        Super admins can do everything an admin can, and create other super admins.
+      }
+    </p>
+
+    @if (createdUser(); as user) {
+      <div class="alert alert-success py-2" role="status">
+        User <b>{{ user.username }}</b> was created.
+      </div>
+    }
+
+    @if (errorMessage()) {
+      <div class="alert alert-danger py-2" role="alert">{{ errorMessage() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="row">
+        <div class="col-sm-6 mb-3">
+          <label class="form-label" for="firstName">First name</label>
+          <input
+            id="firstName"
+            type="text"
+            class="form-control"
+            formControlName="firstName"
+            maxlength="100"
+            autocomplete="off"
+            [class.is-invalid]="showError('firstName')"
+          />
+          <div class="invalid-feedback">First name is required.</div>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <label class="form-label" for="lastName">Last name</label>
+          <input
+            id="lastName"
+            type="text"
+            class="form-control"
+            formControlName="lastName"
+            maxlength="100"
+            autocomplete="off"
+            [class.is-invalid]="showError('lastName')"
+          />
+          <div class="invalid-feedback">Last name is required.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="username">Username</label>
+        <input
+          id="username"
+          type="text"
+          class="form-control"
+          formControlName="username"
+          maxlength="30"
+          autocomplete="off"
+          autocapitalize="none"
+          [class.is-invalid]="showError('username')"
+          [class.is-valid]="form.controls.username.valid && form.controls.username.dirty"
+        />
+        @if (form.controls.username.pending) {
+          <div class="form-text">Checking availability…</div>
+        } @else if (form.controls.username.valid && form.controls.username.dirty) {
+          <div class="valid-feedback d-block">Username is available.</div>
+        } @else if (!showError('username')) {
+          <div class="form-text">
+            3-30 characters: letters, digits, underscore (_) or hyphen (-), with at least one letter
+            and one number.
+          </div>
+        }
+        <div class="invalid-feedback">
+          @if (form.controls.username.hasError('usernameTaken')) {
+            This username is already taken.
+          } @else if (form.controls.username.hasError('required')) {
+            Username is required.
+          } @else {
+            @if (form.controls.username.value.length < 3) {
+              Username must be at least 3 characters.
+            } @else {
+              Use only letters, digits, underscore (_) or hyphen (-), with at least one letter and
+              one number (max 30 characters).
+            }
+          }
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          formControlName="email"
+          maxlength="255"
+          autocomplete="off"
+          [class.is-invalid]="showError('email')"
+        />
+        <div class="invalid-feedback">
+          @if (form.controls.email.hasError('required')) {
+            Email is required.
+          } @else {
+            Enter a valid email address.
+          }
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <div class="input-group has-validation">
+          <input
+            #passwordField
+            id="password"
+            type="password"
+            class="form-control"
+            formControlName="password"
+            maxlength="72"
+            autocomplete="new-password"
+            [class.is-invalid]="showError('password')"
+          />
+          <button appPasswordToggle [input]="passwordField"></button>
+          <div class="invalid-feedback">
+            @if (form.controls.password.hasError('required')) {
+              Password is required.
+            } @else {
+              Password must be at least 8 characters.
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label" for="role">User type</label>
+        <select id="role" class="form-select" formControlName="role">
+          @for (role of roles; track role.value) {
+            <option [value]="role.value">{{ role.label }}</option>
+          }
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting()">
+        @if (isSubmitting()) {
+          <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+          Creating…
+        } @else {
+          Create User
+        }
+      </button>
+    </form>
+  </div>
+</div>

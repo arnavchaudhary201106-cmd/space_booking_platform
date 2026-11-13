@@ -40,8 +40,11 @@ export const eventDataResolver: ResolveFn<Observable<EventData | null>> = (
     stalls: stallService.getStalls(Number(eventId), Number(venueId)),
   }).pipe(
     finalize(() => loaderService.hide()),
-    catchError(() => {
-      router.navigateByUrl('/error');
+    catchError((err) => {
+      // A 401 is handled by the auth interceptor (redirect to login).
+      if (err?.status !== 401) {
+        router.navigateByUrl('/error');
+      }
       return EMPTY;
     }),
   );
